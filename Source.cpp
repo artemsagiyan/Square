@@ -9,7 +9,7 @@
            нуля
 */
 
-#define EPS 10e-9
+#define EPS 10e-6
 
 /*!
     \brief Используется в качестве переменной,
@@ -57,6 +57,9 @@ int SolveLine(double a1, double b1, double* answer);
 
 int SolveSquare(double a, double b, double c, double* answer_1, double* answer_2);
 
+
+void TestSolveSquare();
+
 //-----------------------------------------------------------------------------------------------------------
 
 int main()
@@ -73,11 +76,11 @@ int main()
     printf("# Enter coefficients of quadratic equation, please: a, b and c\n");
 
     //return parameter + []
-    res = scanf_s("%lg %lg %lg", &a, &b, &c);
+    res = scanf("%lg %lg %lg", &a, &b, &c);
     while (res != 3)
     {
         printf("%s", "Your information is not right.\n Please, enter coefficients of quadratic equation: a, b and c");
-        res = scanf_s("%lg %lg %lg", &a, &b, &c);
+        res = scanf("%lg %lg %lg", &a, &b, &c);
     }
 
     int nRoots = SolveSquare(a, b, c, &answer1, &answer2);
@@ -121,7 +124,8 @@ int SolveLine(double a1, double b1, double* answer)
         return INF_ROOTS;
 
     // a1 != 0 && b1 != 0
-    return b1 / a1;
+    *answer = b1 / a1;
+    return 1;
 }
 
 //-----------------------------------------------------------------------------------------------------------
@@ -136,8 +140,9 @@ int SolveSquare(double a, double b, double c, double* answer_1, double* answer_2
     double discr = b * b - 4 * a * c;
 
     if ((fabs(discr) < EPS))
-    {
-        *answer_1 = *answer_2 = -b / (2 * a);
+    {   
+        *answer_1 = *answer_2 = (-b / (2 * a));
+
         return 1;
     }
 
@@ -162,19 +167,58 @@ int IsZero(double solution)
 
 //-----------------------------------------------------------------------------------------------------------
 void TestSolveSquare()
-{   
+{
+    {
+        double x1, x2;
+        int nRoots = SolveSquare(1, 0, 1, &x1, &x2);
+        if (nRoots != 0)
+            printf("TEST 1 is BAD!\n");
+        else
+            printf("TEST 1 is OK!\n"); 
+    }
+
+    {
         double x1, x2;
         int nRoots = SolveSquare(0, 0, 0, &x1, &x2);
         if (IsZero(nRoots - INF_ROOTS) != 1)
-            printf("TEST 1 is BAD! IsZero(nRoots - INF_ROOTS) = false\n");
+            printf("TEST 2 is BAD!\n");
         else
-            printf("TEST 1 is OK\n");
+            printf("TEST 2 is OK!\n");
+    }
+
+    {
+        double x1, x2;
+        int nRoots = SolveSquare(1, 0, 0, &x1, &x2);
+        if (nRoots == 1 && x1 == 0)
+            printf("TEST 3 is OK!\n");
+        else
+            printf("TEST 3 is BAD!\n");
+    }
+
+    {
+        double x1, x2;
+        int nRoots = SolveSquare(1, -2, 1, &x1, &x2);
+        if (nRoots == 1 && x1 == 1)
+            printf("TEST 4 is OK!\n");
+        else
+            printf("TEST 4 is BAD!\n");
+    }
+
+    {
+        double x1, x2;
+        int nRoots = SolveSquare(0, 1, 0, &x1, &x2);
+        if (x1 == 0 && nRoots == 1)
+            printf("TEST 5 is OK!\n");
+        else
+            printf("TEST 5 is BAD!\n");
+    }
+
+    {
+        double x1, x2;
+        int nRoots = SolveSquare(0, 0, 1, &x1, &x2);
+        if (nRoots == 0)
+            printf("TEST 6 is OK!\n");
+        else
+            printf("TEST 6 is BAD!\n");
+    }
 }
-
-
-
-
-
-
-
-
