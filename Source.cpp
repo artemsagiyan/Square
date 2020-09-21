@@ -29,7 +29,6 @@
 /*!
     \brief Используеется для проверки
      нашего числа на ноль
-
 */
 
 int IsZero(double solution);
@@ -37,7 +36,6 @@ int IsZero(double solution);
 /*!
     \brief Используеется для нахождения корней
            линейного уравнения
-
     \param[in] a1       - коэффициент линейного уравнения перед x
     \param[in] b1       - свободный член линейного уравнения
     \param[in] answer   - корень линейного уравнения уравнения
@@ -50,7 +48,6 @@ int SolveLine(double a1, double b1, double* answer);
     \brief Использоуется для нахождения
            количества корней квадратного
            уравнения и значений их же
-
     \param[in] a, b, c            - коэффициенты квадратного уравнения
     \param[in] answer_1, answer_2 - корни квадратного уравнения
 */
@@ -63,7 +60,7 @@ void TestSolveSquare();
 //-----------------------------------------------------------------------------------------------------------
 
 int main()
-{   
+{
     TestSolveSquare();
 
     double a = 0, b = 0, c = 0;
@@ -79,6 +76,7 @@ int main()
     res = scanf("%lg %lg %lg", &a, &b, &c);
     while (res != 3)
     {
+        rewind(stdin);
         printf("%s", "Your information is not right.\n Please, enter coefficients of quadratic equation: a, b and c");
         res = scanf("%lg %lg %lg", &a, &b, &c);
     }
@@ -92,7 +90,7 @@ int main()
         break;
 
     case 1:
-        printf("x0 = %lg\n", answer1);
+        printf("x0 = %lg\n", (answer1 + 0));
         break;
 
     case 2:
@@ -140,7 +138,7 @@ int SolveSquare(double a, double b, double c, double* answer_1, double* answer_2
     double discr = b * b - 4 * a * c;
 
     if ((fabs(discr) < EPS))
-    {   
+    {
         *answer_1 = *answer_2 = (-b / (2 * a));
 
         return 1;
@@ -174,7 +172,7 @@ void TestSolveSquare()
         if (nRoots != 0)
             printf("TEST 1 is BAD!\n");
         else
-            printf("TEST 1 is OK!\n"); 
+            printf("TEST 1 is OK!\n");
     }
 
     {
